@@ -1,62 +1,86 @@
+// I updated the profile card to include an interactive name input, greeting, and a dynamic counter. 05/17/2026
 import React, { useState } from 'react';
-import { View, Text, TextInput, Image, StyleSheet } from 'react-native';
+import { View, Text, TextInput, Button, Image, ScrollView, StyleSheet } from 'react-native';
 
 export default function App() {
   const [name, setName] = useState('');
+  const [count, setCount] = useState(0);
+
+  const message =
+    count > 0
+      ? `${name ? `${name}, ` : ''}you tapped ${count} times!`
+      : "Tap the + button to start";
 
   return (
-    <View style={styles.screen}>
+    <ScrollView contentContainerStyle={styles.container}>
       
-      <Image 
+      <Image  
         source={require('../../assets/images/Dianne PHOTO.jpg')} 
-        style={styles.photo} 
+        style={styles.image} 
       />
+
+      <Text style={styles.profileBio}>MMA student • CS126</Text>
 
       <TextInput
         placeholder="Enter your name"
         onChangeText={setName}
-        style={styles.input}
         value={name}
+        style={styles.input}
       />
 
-      <Text style={styles.greeting}>
-        {name === '' ? 'Hello!' : `Hello, ${name}! 👋`}
+      <Text style={styles.text}>
+        {name === '' ? 'Please enter your name' : `Hello, ${name}! 👋`}
       </Text>
 
-    </View>
+      {/* Dynamic Counter Message */}
+      <Text style={styles.text}>{message}</Text>
+    
+      <View style={styles.buttonContainer}>
+        <Button title="+" onPress={() => setCount(count + 1)} />
+        <Button title="-" onPress={() => setCount(count - 1)} />
+        <Button title="Reset" onPress={() => setCount(0)} />
+      </View>
+
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  screen: { 
-    flex: 1, 
-    alignItems: 'center', 
+  container: {
+    flexGrow: 1, // Safe scrolling behavior for form elements
+    alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#ffffff',
-    padding: 20
+    backgroundColor: '#ffffff', 
+    padding: 20,
   },
-  photo: { 
-    width: 120, 
-    height: 120, 
+  image: {
+    width: 120,
+    height: 120,
     borderRadius: 60,
-    marginBottom: 20
+    marginBottom: 8,
+  },
+  profileBio: {
+    fontSize: 14,
+    color: '#888888',
+    marginBottom: 20,
   },
   input: {
     borderWidth: 1,
-    borderColor: '#000000',
-    width: '80%',          
-    maxWidth: 400,         
-    paddingHorizontal: 15, 
-    paddingVertical: 10,   
-    marginBottom: 20,
-    borderRadius: 20,      
-    backgroundColor: '#ffffff',
-    textAlign: 'center' 
+    borderColor: '#ccc',
+    width: '80%',
+    maxWidth: 300,
+    padding: 10,
+    marginBottom: 10,
+    borderRadius: 6,
   },
-  greeting: {
-    fontSize: 22, 
-    fontWeight: 'bold',
-    color: '#000000',
-    textAlign: 'center'
-  }
+  text: {
+    fontSize: 16,
+    marginVertical: 5,
+    textAlign: 'center',
+  },
+  buttonContainer: {
+    marginTop: 10,
+    width: '60%',
+    gap: 8, 
+  },
 });
