@@ -1,6 +1,7 @@
 import { Image } from 'expo-image';
 import { StyleSheet, Text, View } from 'react-native';
 
+//added my photo, name, and bio to the profile screen, and styled it with a simple layout.
 export default function App() {
   return (
     <View style={s.screen}>
@@ -17,6 +18,8 @@ export default function App() {
   );
 }
 
+//changed the stylesheet to match the new design of the profile screen, with a white background, centered content, and a circular photo. 
+//Edited on May 17, 2026
 const s = StyleSheet.create({
   screen: { 
     flex: 1, 
