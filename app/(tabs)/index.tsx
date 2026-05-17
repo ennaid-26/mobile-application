@@ -1,44 +1,86 @@
-import { Image } from 'expo-image';
-import { StyleSheet, Text, View } from 'react-native';
+// I updated the profile card to include an interactive name input, greeting, and a dynamic counter. 05/17/2026
+import React, { useState } from 'react';
+import { View, Text, TextInput, Button, Image, ScrollView, StyleSheet } from 'react-native';
 
-//added my photo, name, and bio to the profile screen, and styled it with a simple layout.
 export default function App() {
-  return (
-    <View style={s.screen}>
+  
+  const [name, setName] = useState('');
+  const [count, setCount] = useState(0);
 
+  const message =
+    count > 0
+      ? `${name ? `${name}, ` : ''}you tapped ${count} times!`
+      : "Tap the + button to start";
+
+  return (
+    <ScrollView contentContainerStyle={styles.container}>
+      
       <Image 
-        source={require('../../assets/images/Dianne PHOTO.jpg')}
-        style={s.photo}
+        source={require('../../assets/images/Dianne PHOTO.jpg')} 
+        style={styles.image} 
       />
-      
-      <Text style={s.name}>Dianne Melody E. Talictic</Text>
-      
-      <Text style={s.bio}>MMA student • CS126</Text>
-    </View>
+
+      {/* Static Info for your Profile Card */}
+      <Text style={styles.profileBio}>MMA student • CS126</Text>
+
+      <TextInput
+        placeholder="Enter your name"
+        onChangeText={setName}
+        style={styles.input}
+      />
+
+      <Text style={styles.text}>
+        {name === '' ? 'Please enter your name' : `Hello, ${name}! 👋`}
+      </Text>
+
+      {/* Dynamic Counter Message */}
+      <Text style={styles.text}>{message}</Text>
+    
+      <View style={styles.buttonContainer}>
+        <Button title="+" onPress={() => setCount(count + 1)} />
+        <Button title="-" onPress={() => setCount(count - 1)} />
+        <Button title="Reset" onPress={() => setCount(0)} />
+      </View>
+
+    </ScrollView>
   );
 }
 
-//changed the stylesheet to match the new design of the profile screen, with a white background, centered content, and a circular photo. 
-//Edited on May 17, 2026
-const s = StyleSheet.create({
-  screen: { 
-    flex: 1, 
-    alignItems: 'center', 
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#ffffff' 
+    backgroundColor: '#ffffff', 
+    padding: 20,
   },
-  photo: { 
-    width: 120, 
-    height: 120, 
-    borderRadius: 60 
+  image: {
+    width: 120,
+    height: 120,
+    borderRadius: 60,
+    marginBottom: 8,
   },
-  name: { 
-    fontSize: 22, 
-    fontWeight: 'bold', 
-    marginTop: 12 
+  profileBio: {
+    fontSize: 14,
+    color: '#888888',
+    marginBottom: 20,
   },
-  bio: { 
-    fontSize: 14, 
-    color: '#888' 
-  }
+  input: {
+    borderWidth: 1,
+    borderColor: '#ccc',
+    width: '80%',
+    padding: 10,
+    marginBottom: 10,
+    borderRadius: 6,
+  },
+  text: {
+    fontSize: 16,
+    marginVertical: 5,
+    textAlign: 'center',
+  },
+  buttonContainer: {
+    marginTop: 10,
+    width: '60%',
+    gap: 8, 
+  },
 });
